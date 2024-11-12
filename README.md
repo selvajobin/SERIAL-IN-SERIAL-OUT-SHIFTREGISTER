@@ -51,26 +51,28 @@ name:Selva Jobin S
 RegisterNumber:212223220102
 ```
 ```
-module EXP10(clk, sin, q);
-input clk;
-input sin;
-output [3:0] q;
-reg [3:0] q;
-always @(posedge clk)
-begin
-q[0] <= sin;
-q[1] <= q[0];
-q[2] <= q[1];
-q[3] <= q[2];
-end
+module siso(clk, sin, q);
+    input clk;      // Clock input
+    input sin;      // Serial input
+    output [3:0] q; // 4-bit shift register output
+    reg [3:0] q;    // Internal 4-bit register to hold the shift register value
+
+    always @(posedge clk) 
+	 begin
+        q[0] <= sin;   // Load the serial input to the least significant bit
+        q[1] <= q[0];  // Shift previous bit to the next bit
+        q[2] <= q[1];  // Continue shifting
+        q[3] <= q[2];  // Continue shifting
+    end
 endmodule
+
 ```
 
 **RTL LOGIC FOR SISO Shift Register**
-![image](https://github.com/Aaron-0111/SERIAL-IN-SERIAL-OUT-SHIFTREGISTER/assets/149347631/a37853bb-8364-4b13-a3a4-ec64eb159274)
+![Screenshot 2024-11-12 051423](https://github.com/user-attachments/assets/947c9b9d-98d6-40dc-b77e-309b1811f4d6)
 
 **TIMING DIGRAMS FOR SISO Shift Register**
-![image](https://github.com/Aaron-0111/SERIAL-IN-SERIAL-OUT-SHIFTREGISTER/assets/149347631/8b9a7a6f-354e-4840-b696-7cda3704826f)
+![Screenshot 2024-11-12 051350](https://github.com/user-attachments/assets/e6452a3a-3612-4eb9-bfac-36dd9b52556a)
 
 **RESULTS**
 
